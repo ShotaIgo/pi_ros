@@ -1,6 +1,6 @@
 #!/bin/bash/ -xve
 
 #sync and make
-rsync -av ./~/catkin_ws/src/pi_ros/
+rsync -av ./ ~/catkin_ws/src/pi_ros/
 cd ~/catkin_ws
 catkin_make
