@@ -13,7 +13,7 @@ class LightsensorTest(unittest.TestCase):
 
 	def callback(self,data):
 		self.count += 1
-		self.balues = data
+		self.values = data
 
 	def chekc_values(self,lf,ls,rs,rf):
 		vs = self.values
