@@ -1,13 +1,14 @@
 #!/usr/bin/env python
-import rospy, unittest, rostest
-import rosnode
+#engoding: utf8
+import unittest, rostest
+import rosnode, rospy
 import time
 from pi_ros.msg import LightSensorValues
 
 class LightsensorTest(unittest.TestCase):
 	def setUp(self):
 		self.count = 0
-		rospy.Subscriver('/lightsensors', LightSensorValues, self.callback)
+		rospy.Subscriber('/lightsensors', LightSensorValues, self.callback)
 		self.values = LightSensorValues()
 
 	def callback(self,data):
