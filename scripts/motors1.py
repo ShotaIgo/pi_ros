@@ -36,38 +36,35 @@ class Motor():
 			     open("/dev/rtmotor_raw_r0",'w') as rf:
 				lf.write(str(int(round(left_hz))) + "\n")
 				rf.write(str(int(round(right_hz))) + "\n")
-				print("set_raw_freq",left_hz,right_hz)
+				#print("set_raw_freq",left_hz,right_hz)
 		except:
 			rospy.logerr("cannot write to rtmotor_raw_*")
 	
 	def callback_raw_freq(self,message):
-		print("callback_raw_freq",message.left_hz,message.right_hz)
+		#print("callback_raw_freq",message.left_hz,message.right_hz)
 		self.set_raw_freq(message.left_hz,message.right_hz)
 
 	def callback_cmd_vel(self,message):
-		print("linear",message.linear.x,message.linear.y,message.linear.z)
-		print("angular",message.angular.x,message.angular.y,message.angular.z)
+		#print("linear",message.linear.x,message.linear.y,message.linear.z)
+		#print("angular",message.angular.x,message.angular.y,message.angular.z)
 		forward_hz = 80000.0*message.linear.x/(9*math.pi)
 		rot_hz = 400*message.angular.z/math.pi
 		self.set_raw_freq(forward_hz-rot_hz, forward_hz+rot_hz)
 		self.using_cmd_vel = True
 		self.last_time = rospy.Time.now()
-		print("set_raw_freq",forward_hz-rot_hz, forward_hz+rot_hz)
-		print("last_time = ",self.last_time)
-		print("using_cmd_vel = ",self.using_cmd_vel)
+		#print("set_raw_freq",forward_hz-rot_hz, forward_hz+rot_hz)
+		#print("last_time = ",self.last_time)
+		#print("using_cmd_vel = ",self.using_cmd_vel)
 
 if __name__ == '__main__':
 	rospy.init_node('motors')
 	m = Motor()
-	print("Moter type Create")
-	#en = "/dev/rtmotoren0"
-	#print(en)
+	#print("Moter type Create")
 
 	rate = rospy.Rate(10)
 	while not rospy.is_shutdown():	
 		if m.using_cmd_vel and rospy.Time.now().to_sec() - m.last_time.to_sec() >= 1.0:
-			print("Moter Stop")
+			#print("Moter Stop")
 			m.set_raw_freq(0,0)
 			m.using_cmd_vel = False
-			#rospy.is_shutdown()
 		rate.sleep()
