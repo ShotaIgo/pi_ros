@@ -6,7 +6,7 @@ import time
 from pi_ros.msg import LightSensorValues
 from geometry_msgs.msg import Twist
 
-class MoterTest(unittest.TestCase):
+class MotorTest(unittest.TestCase):
 	def file_check(self, dev, value, message):
 		with open("/dev/" + dev,"r") as f:
 			self.assertEqual(f.readline(), str(value)+"\n", message)
